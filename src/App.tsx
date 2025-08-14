@@ -1,4 +1,4 @@
-import DashboardMock from "./components/DashboardMock";
+import DashboardMock from './components/DashboardMock';
 
 function App() {
   return <DashboardMock />;
