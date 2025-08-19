@@ -34,6 +34,6 @@ module.exports = {
   },
   devServer: {
     // Use a different port to avoid conflicts with the shell app.
-    port: 3002,
+    port: 3003,
   },
 };
