@@ -28,6 +28,7 @@ import {
   Pie,
   Cell,
 } from 'recharts';
+import { PageContentWrapper } from '@orbusinfinity-shared/ui-components';
 
 const mainStatsData = [
   {
@@ -105,14 +106,6 @@ const PIE_COLORS = [
 ];
 
 const useStyles = makeStyles({
-  root: {
-    padding: '32px',
-  },
-  header: {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    marginBottom: '24px',
-  },
   mainGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(1, 1fr)',
@@ -134,13 +127,13 @@ const useStyles = makeStyles({
     marginTop: tokens.spacingVerticalS,
   },
   chartCard: {
-    gridColumn: '1 / -1', // Span full width on mobile
+    gridColumn: '1 / -1', 
     '@media (min-width: 768px)': {
       gridColumn: 'span 2',
     },
   },
   listCard: {
-    gridColumn: '1 / -1', // Span full width on mobile
+    gridColumn: '1 / -1',
     '@media (min-width: 1024px)': {
       gridColumn: 'span 1',
     },
@@ -392,9 +385,7 @@ const DashboardMock = () => {
   }, []);
 
   return (
-    <div className={styles.root}>
-      <h1 className={styles.header}>Dashboard</h1>
-
+    <PageContentWrapper title='Dashboard'>
       <div className={styles.mainGrid}>
         {isLoading ? (
           <>
@@ -416,7 +407,7 @@ const DashboardMock = () => {
           </>
         )}
       </div>
-    </div>
+    </PageContentWrapper>
   );
 };
 
