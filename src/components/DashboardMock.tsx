@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
   makeStyles,
+  mergeClasses,
   shorthands,
   tokens,
   Card,
@@ -187,7 +188,7 @@ const CardSkeleton = () => {
 const ChartSkeleton = ({ className }: { className?: string }) => {
   const styles = useStyles();
   return (
-    <Card className={`${styles.card} ${className}`}>
+    <Card className={mergeClasses(styles.card, className)}>
       <Skeleton>
         <SkeletonItem style={{ width: '100%', height: '320px' }} />
       </Skeleton>
@@ -198,7 +199,7 @@ const ChartSkeleton = ({ className }: { className?: string }) => {
 const ListSkeleton = ({ className }: { className?: string }) => {
   const styles = useStyles();
   return (
-    <Card className={`${styles.card} ${className}`}>
+    <Card className={mergeClasses(styles.card, className)}>
       <Skeleton>
         {[...Array(5)].map((_, i) => (
           <div
@@ -263,7 +264,7 @@ const StatCard = ({
 const OverviewChart = ({ className }: { className?: string }) => {
   const styles = useStyles();
   return (
-    <Card className={`${styles.card} ${className}`}>
+    <Card className={mergeClasses(styles.card, className)}>
       <CardHeader header={<Text weight='semibold'>Revenue Overview</Text>} />
       <div className={styles.chartContainer}>
         <ResponsiveContainer width='100%' height='100%'>
@@ -313,7 +314,7 @@ const OverviewChart = ({ className }: { className?: string }) => {
 const RecentSales = ({ className }: { className?: string }) => {
   const styles = useStyles();
   return (
-    <Card className={`${styles.card} ${className}`}>
+    <Card className={mergeClasses(styles.card, className)}>
       <CardHeader header={<Text weight='semibold'>Recent Sales</Text>} />
       <div className={styles.recentSalesContainer}>
         {recentSalesData.map((sale, index) => (
@@ -338,7 +339,7 @@ const RecentSales = ({ className }: { className?: string }) => {
 const DevicePieChart = ({ className }: { className?: string }) => {
   const styles = useStyles();
   return (
-    <Card className={`${styles.card} ${className}`}>
+    <Card className={mergeClasses(styles.card, className)}>
       <CardHeader header={<Text weight='semibold'>Traffic by Device</Text>} />
       <div className={styles.chartContainer}>
         <ResponsiveContainer width='100%' height='100%'>
