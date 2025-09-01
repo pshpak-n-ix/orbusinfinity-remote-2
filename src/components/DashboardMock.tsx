@@ -201,9 +201,9 @@ const ListSkeleton = ({ className }: { className?: string }) => {
   return (
     <Card className={mergeClasses(styles.card, className)}>
       <Skeleton>
-        {[...Array(5)].map((_, i) => (
+        {Array.from({ length: 5 }, (_, i) => (
           <div
-            key={i}
+            key={`skeleton-item-${i}`}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -317,8 +317,8 @@ const RecentSales = ({ className }: { className?: string }) => {
     <Card className={mergeClasses(styles.card, className)}>
       <CardHeader header={<Text weight='semibold'>Recent Sales</Text>} />
       <div className={styles.recentSalesContainer}>
-        {recentSalesData.map((sale, index) => (
-          <div key={index} className={styles.saleItem}>
+        {recentSalesData.map((sale) => (
+          <div key={sale.email} className={styles.saleItem}>
             <Avatar name={sale.name} color='colorful' />
             <div className={styles.saleItemText}>
               <Text weight='semibold' block>
@@ -358,7 +358,7 @@ const DevicePieChart = ({ className }: { className?: string }) => {
             >
               {pieChartData.map((entry, index) => (
                 <Cell
-                  key={`cell-${index}`}
+                  key={`cell-${entry.name}`}
                   fill={PIE_COLORS[index % PIE_COLORS.length]}
                 />
               ))}
@@ -381,8 +381,8 @@ const DashboardMock = () => {
   const styles = useStyles();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => { setIsLoading(false); }, 2000);
+    return () => { clearTimeout(timer); };
   }, []);
 
   return (
@@ -390,8 +390,8 @@ const DashboardMock = () => {
       <div className={styles.mainGrid}>
         {isLoading ? (
           <>
-            {[...Array(4)].map((_, i) => (
-              <CardSkeleton key={i} />
+            {Array.from({ length: 4 }, (_, i) => (
+              <CardSkeleton key={`card-skeleton-${i}`} />
             ))}
             <ChartSkeleton className={styles.chartCard} />
             <ListSkeleton className={styles.listCard} />
