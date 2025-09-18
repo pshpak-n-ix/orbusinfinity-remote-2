@@ -1,4 +1,3 @@
-// Base configuration for remote-2 application
 const baseConfig = {
   appName: 'remote-2',
   displayName: 'Remote Application 2',
