@@ -1,5 +1,4 @@
-import { TodoPriority } from './operations';
-
+import type { TodoPriority } from './operations';
 export interface Todo {
   id: string;
   title: string;

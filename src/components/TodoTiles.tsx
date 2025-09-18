@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useTodos } from '../utils/hooks/useTodos';
 import {
   makeStyles,
@@ -9,18 +9,8 @@ import {
   Spinner,
   MessageBar,
   Checkbox,
-  Menu,
-  MenuTrigger,
-  MenuPopover,
-  MenuList,
-  MenuItem,
-  MenuDivider,
 } from '@fluentui/react-components';
 import {
-  Add24Regular,
-  CheckmarkCircle24Regular,
-  Circle24Regular,
-  MoreVertical24Regular,
   ArrowClockwise24Regular,
   Calendar24Regular,
   Clock24Regular,
@@ -221,36 +211,23 @@ const formatOptionalDate = (dateString?: string | null) => {
 };
 
 const isOverdue = (dueDate?: string | null) => {
-  if (!dueDate) {return false;}
+  if (!dueDate) {
+    return false;
+  }
   return new Date(dueDate) < new Date();
 };
 
 interface TodoCardProps {
   todo: Todo;
-  onToggleComplete: (todo: Todo) => void;
-  onEdit: (todo: Todo) => void;
-  onDelete: (todo: Todo) => void;
 }
 
-const TodoCard = ({ todo, onToggleComplete, onEdit, onDelete }: TodoCardProps) => {
+const TodoCard = ({ todo }: TodoCardProps) => {
   const styles = useStyles();
   const dueDate = formatOptionalDate(todo.dueDate);
   const overdue = isOverdue(todo.dueDate);
 
-  const handleToggleComplete = useCallback(() => {
-    onToggleComplete(todo);
-  }, [todo, onToggleComplete]);
-
-  const handleEdit = useCallback(() => {
-    onEdit(todo);
-  }, [todo, onEdit]);
-
-  const handleDelete = useCallback(() => {
-    onDelete(todo);
-  }, [todo, onDelete]);
-
   return (
-    <div 
+    <div
       className={mergeClasses(
         styles.todoCard,
         todo.completed && styles.completedCard
@@ -259,79 +236,53 @@ const TodoCard = ({ todo, onToggleComplete, onEdit, onDelete }: TodoCardProps) =
       {/* Title Section */}
       <div className={styles.cardHeader}>
         <div className={styles.titleSection}>
-          {todo.completed ? (
-            <CheckmarkCircle24Regular
-              className={styles.statusIcon}
-              style={{ color: tokens.colorPaletteGreenBackground2 }}
-              onClick={handleToggleComplete}
-            />
-          ) : (
-            <Circle24Regular 
-              className={styles.statusIcon}
-              onClick={handleToggleComplete}
-            />
-          )}
           <div className={styles.titleContainer}>
-            <div 
+            <div
               className={mergeClasses(
                 styles.titleText,
                 todo.completed && styles.completedTitle
               )}
-              title={todo.title} // Tooltip for long titles
+              title={todo.title}
             >
               {todo.title}
             </div>
-            <div className={styles.todoId}>
-              ID: {todo.id.slice(-8)} {/* Show last 8 characters of ID */}
-            </div>
+            <div className={styles.todoId}>ID: {todo.id}</div>
           </div>
-          <Menu>
-            <MenuTrigger disableButtonEnhancement>
-              <Button
-                appearance="subtle"
-                icon={<MoreVertical24Regular />}
-                size="small"
-                className={styles.menuButton}
-              />
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem onClick={handleEdit}>Edit</MenuItem>
-                <MenuItem onClick={handleToggleComplete}>
-                  {todo.completed ? 'Mark Incomplete' : 'Mark Complete'}
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={handleDelete}>Delete</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
         </div>
       </div>
 
       {/* Content Section */}
       <div className={styles.cardContent}>
         {todo.description && (
-          <div className={styles.description}>
-            {todo.description}
-          </div>
+          <div className={styles.description}>{todo.description}</div>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            flexWrap: 'wrap',
+          }}
+        >
           <Badge
             color={getPriorityColor(todo.priority)}
             className={styles.priorityBadge}
-            size="small"
+            size='small'
           >
             {todo.priority.toLowerCase()}
           </Badge>
           {dueDate && (
-            <div className={styles.dateInfo} style={{ 
-              color: overdue && !todo.completed 
-                ? tokens.colorPaletteRedForeground1 
-                : tokens.colorNeutralForeground3 
-            }}
+            <div
+              className={styles.dateInfo}
+              style={{
+                color:
+                  overdue && !todo.completed
+                    ? tokens.colorPaletteRedForeground1
+                    : tokens.colorNeutralForeground3,
+              }}
             >
-              <Calendar24Regular fontSize="12px" />
+              <Calendar24Regular fontSize='12px' />
               <span>{dueDate}</span>
               {overdue && !todo.completed && <span>(Overdue)</span>}
             </div>
@@ -342,7 +293,7 @@ const TodoCard = ({ todo, onToggleComplete, onEdit, onDelete }: TodoCardProps) =
       {/* Footer Section */}
       <div className={styles.cardFooter}>
         <div className={styles.dateInfo}>
-          <Clock24Regular fontSize="12px" />
+          <Clock24Regular fontSize='12px' />
           <span>Created {formatDate(todo.createdAt)}</span>
         </div>
       </div>
@@ -364,30 +315,6 @@ const TodoTiles = () => {
       console.error('Error refreshing todos:', err);
     }
   };
-
-  const handleToggleComplete = useCallback((todo: Todo) => {
-    // TODO: Implement toggle complete functionality
-    // eslint-disable-next-line no-console
-    console.log('Toggle complete for todo:', todo.id);
-  }, []);
-
-  const handleEdit = useCallback((todo: Todo) => {
-    // TODO: Implement edit functionality
-    // eslint-disable-next-line no-console
-    console.log('Edit todo:', todo.id);
-  }, []);
-
-  const handleDelete = useCallback((todo: Todo) => {
-    // TODO: Implement delete functionality
-    // eslint-disable-next-line no-console
-    console.log('Delete todo:', todo.id);
-  }, []);
-
-  const handleCreateTodo = useCallback(() => {
-    // TODO: Implement create todo functionality
-    // eslint-disable-next-line no-console
-    console.log('Create new todo');
-  }, []);
 
   if (error && todos.length === 0) {
     return (
@@ -424,13 +351,6 @@ const TodoTiles = () => {
                 {loading ? 'Refreshing...' : 'Refresh'}
               </Button>
             </div>
-            <Button
-              appearance='primary'
-              icon={<Add24Regular />}
-              onClick={handleCreateTodo}
-            >
-              Add TODO
-            </Button>
           </div>
         </div>
 
@@ -440,10 +360,21 @@ const TodoTiles = () => {
           </div>
         ) : todos.length === 0 ? (
           <div className={styles.emptyState}>
-            <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>
+            <div
+              style={{
+                fontSize: '18px',
+                fontWeight: '600',
+                marginBottom: '8px',
+              }}
+            >
               No todos found
             </div>
-            <div style={{ fontSize: '14px', color: tokens.colorNeutralForeground2 }}>
+            <div
+              style={{
+                fontSize: '14px',
+                color: tokens.colorNeutralForeground2,
+              }}
+            >
               Create your first TODO to get started!
             </div>
           </div>
@@ -451,13 +382,7 @@ const TodoTiles = () => {
           <div className={styles.tilesContainer}>
             <div className={styles.tilesGrid}>
               {todos.map(todo => (
-                <TodoCard
-                  key={todo.id}
-                  todo={todo}
-                  onToggleComplete={handleToggleComplete}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
+                <TodoCard key={todo.id} todo={todo} />
               ))}
             </div>
           </div>

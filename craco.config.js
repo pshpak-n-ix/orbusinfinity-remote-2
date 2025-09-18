@@ -34,7 +34,7 @@ module.exports = {
           filename: "remoteEntry.js",
           exposes: {
             "./Dashboard": "./src/components/DashboardMock",
-            "./TodoTiles": "./src/components/TodoTilesWrapper",
+            "./TodoTiles": "./src/components/TodoTiles",
           },
           shared: webpackConfig.sharedDependencies,
         }),
