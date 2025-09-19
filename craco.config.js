@@ -41,15 +41,21 @@ module.exports = {
         new DefinePlugin(webpackConfig.definePlugin),
       ],
     },
-    configure: (webpackConfig) => {
-      // Set environment-specific configuration
-      if (webpackConfig.isProduction) {
-        webpackConfig.mode = 'production';
+    configure: (config) => {
+      config.output.publicPath = webpackConfig.publicPath;
+      
+      if (webpackConfig.enableMinification) {
+        config.optimization = {
+          ...config.optimization,
+          minimize: true,
+        };
       }
       
-      // Set environment-specific public path
-      webpackConfig.output.publicPath = webpackConfig.publicPath;
-      return webpackConfig;
+      if (!webpackConfig.enableSourceMaps) {
+        config.devtool = false;
+      }
+      
+      return config;
     },
   },
   devServer: {
